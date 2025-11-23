@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order History | 6IX</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/animations.css">
+</head>
+<body>
+    <h1>Order History</h1>
+    <div id="order-history-list"></div>
+    <a href="shop.html">Back to Shop</a>
+    <script src="../js/main.js"></script>
+    <script>
+        function renderOrderHistory() {
+            const list = document.getElementById('order-history-list');
+            let orders = JSON.parse(localStorage.getItem('orders') || '[]');
+            if (orders.length === 0) {
+                list.innerHTML = '<p>No orders found.</p>';
+                return;
+            }
+            list.innerHTML = orders.reverse().map(order => {
+                return `<div class='order'>
+                    <strong>Date:</strong> ${new Date(order.date).toLocaleString()}<br>
+                    <strong>Name:</strong> ${order.name}<br>
+                    <strong>Address:</strong> ${order.address}<br>
+                    <strong>Payment:</strong> ${order.payment}<br>
+                    <strong>Items:</strong>
+                    <ul>
+                        ${order.cart.map(item => {
+                            const p = (window.products || []).find(prod => prod.id === item.id);
+                            return `<li>${p ? p.name : 'Product'} x ${item.qty}</li>`;
+                        }).join('')}
+                    </ul>
+                </div><hr>`;
+            }).join('');
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+            renderOrderHistory();
+        });
+    </script>
+</body>
+</html> 

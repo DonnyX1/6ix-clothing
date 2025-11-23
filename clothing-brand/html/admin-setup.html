@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Setup | 6IX</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .setup-container {
+            max-width: 500px;
+            margin: 5rem auto;
+            padding: 2rem;
+            background: var(--secondary-color);
+            border-radius: 8px;
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .setup-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .form-group label {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        .form-group input {
+            padding: 0.75rem;
+            border: 1px solid var(--gray-300);
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+        
+        .admin-key {
+            background: var(--gray-100);
+            padding: 1rem;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 0.9rem;
+            color: var(--gray-700);
+        }
+        
+        .error-message {
+            color: #ff6b6b;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+        
+        .success-message {
+            color: #51cf66;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+        
+        .setup-btn {
+            background: var(--accent-color);
+            color: var(--light-text);
+            padding: 1rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .setup-btn:hover {
+            background: #e55a2b;
+        }
+        
+        .setup-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+        
+        .instructions {
+            background: var(--gray-100);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+        
+        .instructions h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .instructions ol {
+            color: var(--gray-700);
+            line-height: 1.6;
+        }
+        
+        .instructions li {
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="setup-container">
+        <h1 style="text-align: center; margin-bottom: 2rem;">Admin Setup</h1>
+        
+        <div class="instructions">
+            <h3>How to become an admin:</h3>
+            <ol>
+                <li>Fill out the form below with your details</li>
+                <li>Use the admin key: <strong>6IX_ADMIN_2025</strong></li>
+                <li>Click "Create Admin Account"</li>
+                <li>Login with your new admin credentials</li>
+                <li>Access the admin panel at <code>admin.html</code></li>
+            </ol>
+        </div>
+        
+        <form class="setup-form" id="admin-setup-form">
+            <div class="form-group">
+                <label for="admin-name">Full Name</label>
+                <input type="text" id="admin-name" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="admin-email">Email Address</label>
+                <input type="email" id="admin-email" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="admin-password">Password</label>
+                <input type="password" id="admin-password" required minlength="6">
+            </div>
+            
+            <div class="form-group">
+                <label for="admin-key">Admin Key</label>
+                <input type="text" id="admin-key" value="6IX_ADMIN_2025" required>
+                <div class="admin-key">
+                    Default key: 6IX_ADMIN_2025
+                </div>
+            </div>
+            
+            <button type="submit" class="setup-btn" id="setup-btn">
+                Create Admin Account
+            </button>
+            
+            <div id="message"></div>
+        </form>
+        
+        <div style="text-align: center; margin-top: 2rem;">
+            <a href="index.html" style="color: var(--accent-color);">← Back to Home</a>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE_URL = 'http://localhost:3000';
+        
+        document.getElementById('admin-setup-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('admin-name').value;
+            const email = document.getElementById('admin-email').value;
+            const password = document.getElementById('admin-password').value;
+            const adminKey = document.getElementById('admin-key').value;
+            const messageDiv = document.getElementById('message');
+            const submitBtn = document.getElementById('setup-btn');
+            
+            // Clear previous messages
+            messageDiv.innerHTML = '';
+            messageDiv.className = '';
+            
+            // Disable button
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Creating Admin...';
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/users/create-admin`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ name, email, password, adminKey })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    messageDiv.innerHTML = `
+                        <div class="success-message">
+                            ✅ Admin account created successfully!<br>
+                            You can now login with your credentials.
+                        </div>
+                    `;
+                    
+                    // Redirect to login after 2 seconds
+                    setTimeout(() => {
+                        window.location.href = 'auth.html';
+                    }, 2000);
+                } else {
+                    messageDiv.innerHTML = `
+                        <div class="error-message">
+                            ❌ ${data.message}
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                messageDiv.innerHTML = `
+                    <div class="error-message">
+                        ❌ Network error. Please make sure the backend server is running.
+                    </div>
+                `;
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Create Admin Account';
+            }
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You | 6IX</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<main class="thank-you-container">
+    <div class="thank-you-card">
+        <div class="checkmark-animation">
+            <svg viewBox="0 0 52 52"><circle class="circle" cx="26" cy="26" r="25" fill="none"/><path class="check" fill="none" d="M14 27l7 7 15-15"/></svg>
+        </div>
+        <h1>Thank You for Your Order!</h1>
+        <p>Your order was placed successfully.<br> A confirmation is being sent to our team.</p>
+        <a href="shop.html" class="btn btn-accent">Continue Shopping</a>
+    </div>
+</main>
+<style>
+.thank-you-container {display: flex;align-items: center;justify-content: center;height: 100vh;background: #f8f8fa;}
+.thank-you-card {background: #fff;padding: 2rem 3rem;border-radius: 18px;box-shadow: 0 5px 32px rgba(48,50,63,0.13);text-align: center;max-width: 350px;width: 100%;}
+.checkmark-animation {margin: 0 auto 1.2rem;width: 75px;}
+.circle {stroke: #05c46b;stroke-width: 3;stroke-dasharray: 160;stroke-dashoffset: 160;animation: drawCircle 1s forwards;}
+.check {stroke: #05c46b;stroke-width: 5;stroke-linecap: round;stroke-dasharray: 48;stroke-dashoffset: 48;animation: drawCheck 0.6s 1s forwards;}
+@keyframes drawCircle {to {stroke-dashoffset: 0;}}
+@keyframes drawCheck {to {stroke-dashoffset: 0;}}
+.btn.btn-accent {background: #05c46b;color: white;padding: 0.75em 1.6em;border: none;border-radius: 6px;font-size: 1.1em;font-weight: 600;text-decoration: none;transition: box-shadow 0.2s;box-shadow: 0 1px 8px 0 #05c46b33;}
+.btn.btn-accent:hover {box-shadow: 0 2px 20px 0 #05c46b44;}
+</style>
+</body>
+</html> 

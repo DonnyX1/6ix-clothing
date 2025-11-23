@@ -1,0 +1,92 @@
+/* About Page Specific Styles - Reduced Brightness */
+
+/* Reduce overall page brightness */
+body {
+    filter: brightness(0.85) contrast(0.9);
+}
+
+/* Darken the page header background */
+.page-header {
+    background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 50%, #0f0f0f 100%);
+    filter: brightness(0.8);
+}
+
+.page-header:before {
+    background: linear-gradient(45deg, rgba(225, 6, 0, 0.1) 0%, rgba(0, 0, 0, 0.5) 100%);
+}
+
+/* Reduce brightness of about intro section */
+.about-intro {
+    background: rgba(248, 248, 248, 0.7);
+    filter: brightness(0.9);
+}
+
+/* Darken the values section */
+.values {
+    background-color: rgba(240, 240, 240, 0.8);
+    filter: brightness(0.85);
+}
+
+/* Reduce team section brightness */
+.team {
+    background: rgba(250, 250, 250, 0.6);
+    filter: brightness(0.9);
+}
+
+/* Darken CTA banner */
+.cta-banner {
+    background: linear-gradient(135deg, #111111 0%, #222222 50%, #111111 100%);
+    filter: brightness(0.8);
+}
+
+/* Reduce contrast on text elements */
+.page-header h1,
+.page-header p {
+    opacity: 0.9;
+}
+
+.about-text h2,
+.about-text p {
+    opacity: 0.85;
+}
+
+.section-title {
+    opacity: 0.9;
+}
+
+.value-card h3,
+.value-card p {
+    opacity: 0.8;
+}
+
+.team-member h3,
+.team-member p {
+    opacity: 0.85;
+}
+
+.cta-content h2,
+.cta-content p {
+    opacity: 0.9;
+}
+
+/* Reduce image brightness */
+.about-image img,
+.member-image img {
+    filter: brightness(0.8) contrast(0.9);
+}
+
+/* Darken value icons */
+.value-icon {
+    opacity: 0.7;
+}
+
+/* Reduce social icon brightness */
+.social-icons .social-icon {
+    opacity: 0.8;
+    filter: brightness(0.9);
+}
+
+.social-icons .social-icon:hover {
+    opacity: 0.9;
+    filter: brightness(1.1);
+}

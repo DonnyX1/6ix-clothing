@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel | 6IX</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .admin-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: var(--secondary-color);
+            min-height: 100vh;
+        }
+        
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--gray-200);
+        }
+        
+        .admin-nav {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .admin-nav button {
+            padding: 0.75rem 1.5rem;
+            border: 1px solid var(--gray-300);
+            background: var(--secondary-color);
+            color: var(--primary-color);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .admin-nav button.active {
+            background: var(--accent-color);
+            color: var(--light-text);
+            border-color: var(--accent-color);
+        }
+        
+        .admin-section {
+            display: none;
+        }
+        
+        .admin-section.active {
+            display: block;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: var(--primary-color);
+            color: var(--light-text);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent-color);
+        }
+        
+        .order-item, .user-item {
+            background: var(--gray-100);
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent-color);
+        }
+        
+        .access-denied {
+            text-align: center;
+            padding: 4rem;
+            color: #ff6b6b;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <div class="admin-header">
+            <h1>Admin Panel</h1>
+            <div>
+                <span id="admin-user-info"></span>
+                <button onclick="logout()" style="margin-left: 1rem;">Logout</button>
+            </div>
+        </div>
+        
+        <div class="admin-nav">
+            <button onclick="showSection('dashboard')" class="active">Dashboard</button>
+            <button onclick="showSection('orders')">Orders</button>
+            <button onclick="showSection('users')">Users</button>
+            <button onclick="showSection('newsletter')">Newsletter</button>
+            <button onclick="showSection('products')">Products</button>
+        </div>
+        
+        <!-- Dashboard Section -->
+        <div id="dashboard" class="admin-section active">
+            <h2>Dashboard Overview</h2>
+            <div class="stats-grid" id="dashboard-stats">
+                <!-- Stats will be populated by JavaScript -->
+            </div>
+        </div>
+        
+        <!-- Orders Section -->
+        <div id="orders" class="admin-section">
+            <h2>Order Management</h2>
+            <div id="orders-list">
+                <!-- Orders will be populated by JavaScript -->
+            </div>
+        </div>
+        
+        <!-- Users Section -->
+        <div id="users" class="admin-section">
+            <h2>User Management</h2>
+            <div id="users-list">
+                <!-- Users will be populated by JavaScript -->
+            </div>
+        </div>
+        
+        <!-- Newsletter Section -->
+        <div id="newsletter" class="admin-section">
+            <h2>Newsletter Subscriptions</h2>
+            <div id="newsletter-content">
+                <!-- Newsletter content will be populated by JavaScript -->
+            </div>
+        </div>
+        
+        <!-- Products Section -->
+        <div id="products" class="admin-section">
+            <h2>Product Management</h2>
+            <div id="products-content">
+                <!-- Products content will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+    <script src="../js/auth.js"></script>
+    <script>
+        // Check admin access
+        function checkAdminAccess() {
+            const user = getCurrentUser();
+            if (!user || !user.isAdmin) {
+                document.querySelector('.admin-container').innerHTML = `
+                    <div class="access-denied">
+                        <h2>Access Denied</h2>
+                        <p>You need admin privileges to access this page.</p>
+                        <a href="admin-setup.html">Create Admin Account</a> | 
+                        <a href="auth.html">Login</a>
+                    </div>
+                `;
+                return false;
+            }
+            return true;
+        }
+        
+        // Show admin user info
+        function showAdminInfo() {
+            const user = getCurrentUser();
+            if (user) {
+                document.getElementById('admin-user-info').textContent = 
+                    `Welcome, ${user.name} (${user.email})`;
+            }
+        }
+        
+        // Show section
+        function showSection(sectionName) {
+            // Hide all sections
+            document.querySelectorAll('.admin-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Remove active class from all nav buttons
+            document.querySelectorAll('.admin-nav button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionName).classList.add('active');
+            
+            // Add active class to clicked button
+            event.target.classList.add('active');
+            
+            // Load section data
+            loadSectionData(sectionName);
+        }
+        
+        // Load section data
+        function loadSectionData(sectionName) {
+            switch(sectionName) {
+                case 'dashboard':
+                    loadDashboardStats();
+                    break;
+                case 'orders':
+                    loadOrders();
+                    break;
+                case 'users':
+                    loadUsers();
+                    break;
+                case 'newsletter':
+                    loadNewsletter();
+                    break;
+                case 'products':
+                    loadProducts();
+                    break;
+            }
+        }
+        
+        // Load dashboard stats
+        function loadDashboardStats() {
+            const orders = JSON.parse(localStorage.getItem('orders') || '[]');
+            const subscriptions = JSON.parse(localStorage.getItem('newsletter_subscriptions') || '[]');
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            
+            const totalRevenue = orders.reduce((sum, order) => sum + (order.total || 0), 0);
+            const recentOrders = orders.filter(order => 
+                new Date(order.date) > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
+            ).length;
+            
+            document.getElementById('dashboard-stats').innerHTML = `
+                <div class="stat-card">
+                    <div class="stat-number">${orders.length}</div>
+                    <div>Total Orders</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">$${totalRevenue.toFixed(2)}</div>
+                    <div>Total Revenue</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${subscriptions.length}</div>
+                    <div>Newsletter Subscribers</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${recentOrders}</div>
+                    <div>Orders This Week</div>
+                </div>
+            `;
+        }
+        
+        // Load orders
+        function loadOrders() {
+            const orders = JSON.parse(localStorage.getItem('orders') || '[]');
+            
+            if (orders.length === 0) {
+                document.getElementById('orders-list').innerHTML = '<p>No orders found.</p>';
+                return;
+            }
+            
+            document.getElementById('orders-list').innerHTML = orders
+                .sort((a, b) => new Date(b.date) - new Date(a.date))
+                .map(order => `
+                    <div class="order-item">
+                        <h3>Order #${order.id || 'N/A'}</h3>
+                        <p><strong>Customer:</strong> ${order.name}</p>
+                        <p><strong>Email:</strong> ${order.email}</p>
+                        <p><strong>Date:</strong> ${new Date(order.date).toLocaleString()}</p>
+                        <p><strong>Total:</strong> $${order.total || 0}</p>
+                        <p><strong>Status:</strong> ${order.status || 'Pending'}</p>
+                    </div>
+                `).join('');
+        }
+        
+        // Load users
+        function loadUsers() {
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            
+            if (users.length === 0) {
+                document.getElementById('users-list').innerHTML = '<p>No users found.</p>';
+                return;
+            }
+            
+            document.getElementById('users-list').innerHTML = users
+                .map(user => `
+                    <div class="user-item">
+                        <h3>${user.name}</h3>
+                        <p><strong>Email:</strong> ${user.email}</p>
+                        <p><strong>Role:</strong> ${user.isAdmin ? 'Admin' : 'User'}</p>
+                        <p><strong>Verified:</strong> ${user.isVerified ? 'Yes' : 'No'}</p>
+                    </div>
+                `).join('');
+        }
+        
+        // Load newsletter
+        function loadNewsletter() {
+            const subscriptions = JSON.parse(localStorage.getItem('newsletter_subscriptions') || '[]');
+            
+            document.getElementById('newsletter-content').innerHTML = `
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">${subscriptions.length}</div>
+                        <div>Total Subscribers</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">${new Set(subscriptions.map(s => s.email)).size}</div>
+                        <div>Unique Emails</div>
+                    </div>
+                </div>
+                <div>
+                    <a href="newsletter-admin.html" class="btn btn-accent">View Detailed Newsletter Data</a>
+                </div>
+            `;
+        }
+        
+        // Load products
+        function loadProducts() {
+            const products = JSON.parse(localStorage.getItem('admin_products') || '[]');
+            
+            if (products.length === 0) {
+                document.getElementById('products-content').innerHTML = '<p>No products found.</p>';
+                return;
+            }
+            
+            document.getElementById('products-content').innerHTML = `
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">${products.length}</div>
+                        <div>Total Products</div>
+                    </div>
+                </div>
+                <div>
+                    <a href="shop.html" class="btn btn-accent">Manage Products in Shop</a>
+                </div>
+            `;
+        }
+        
+        // Initialize admin panel
+        if (checkAdminAccess()) {
+            showAdminInfo();
+            loadDashboardStats();
+        }
+    </script>
+</body>
+</html>

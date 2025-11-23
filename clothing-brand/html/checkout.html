@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout | 6IX</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=sb&currency=USD"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-left">
+                <div class="logo">6IX</div>
+            </div>
+            <div class="header-center">
+                <nav>
+                    <ul class="nav-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li class="has-mega">
+                            <a href="shop.html" class="mega-toggle" aria-expanded="false">Shop</a>
+                            <div class="mega-menu">
+                                <div class="mega-column">
+                                    <h4>Featured</h4>
+                                    <a href="shop.html">All Products</a>
+                                    <a href="shop.html?category=new">New Arrivals</a>
+                                    <a href="shop.html?category=best">Best Sellers</a>
+                                    <a href="shop.html?category=sale">Sale</a>
+                                </div>
+                                <div class="mega-column">
+                                    <h4>Men</h4>
+                                    <a href="shop.html?category=sneakers">Sneakers</a>
+                                    <a href="shop.html?category=tops">Tops & T-Shirts</a>
+                                    <a href="shop.html?category=hoodies">Hoodies</a>
+                                    <a href="shop.html?category=shorts">Shorts</a>
+                                    <a href="shop.html?category=outerwear">Outerwear</a>
+                                </div>
+                                <div class="mega-column">
+                                    <h4>Women</h4>
+                                    <a href="shop.html?category=sneakers">Sneakers</a>
+                                    <a href="shop.html?category=tops">Tops</a>
+                                    <a href="shop.html?category=hoodies">Hoodies</a>
+                                    <a href="shop.html?category=outerwear">Outerwear</a>
+                                    <a href="shop.html?category=accessories">Accessories</a>
+                                </div>
+                                <div class="mega-column">
+                                    <h4>Collections</h4>
+                                    <a href="shop.html?category=running">Running</a>
+                                    <a href="shop.html?category=training">Training</a>
+                                    <a href="shop.html?category=lifestyle">Lifestyle</a>
+                                    <a href="shop.html?category=essentials">Essentials</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="header-right">
+                <div class="header-actions">
+                    <div class="cart-icon">
+                        <a href="cart.html">🛒</a>
+                    </div>
+                </div>
+                <div class="mobile-menu-btn">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="checkout-page">
+        <div class="container">
+            <div class="checkout-header">
+                <h1>Checkout</h1>
+                <div class="checkout-steps">
+                    <div class="step active">1. Shipping</div>
+                    <div class="step">2. Payment</div>
+                    <div class="step">3. Review</div>
+                </div>
+            </div>
+            
+            <div class="checkout-content">
+                <div class="checkout-form-section">
+                    <form id="checkout-form" class="checkout-form">
+                        <div class="form-section">
+                            <h2>Shipping Information</h2>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="user-name">Full Name</label>
+                                    <input type="text" id="user-name" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="user-email">Email</label>
+                                    <input type="email" id="user-email" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="user-phone">Phone</label>
+                                    <input type="tel" id="user-phone" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="user-address">Address</label>
+                                <input type="text" id="user-address" required>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="user-city">City</label>
+                                    <input type="text" id="user-city" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="user-state">State</label>
+                                    <input type="text" id="user-state" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="user-zip">ZIP Code</label>
+                                    <input type="text" id="user-zip" required>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-section">
+                            <h2>Payment Method</h2>
+                            <div class="payment-methods">
+                                <div class="payment-option">
+                                    <input type="radio" id="payment-stripe" name="payment-method" value="card" checked>
+                                    <label for="payment-stripe"><span class="payment-icon">💳</span> Credit/Debit Card (Stripe Test)</label>
+                                </div>
+                                <div class="payment-option">
+                                    <input type="radio" id="payment-paypal" name="payment-method" value="paypal">
+                                    <label for="payment-paypal"><span class="payment-icon">🅿️</span> PayPal (Demo)</label>
+                                </div>
+                                <div class="payment-option">
+                                    <input type="radio" id="payment-cod" name="payment-method" value="cod">
+                                    <label for="payment-cod"><span class="payment-icon">💵</span> Cash on Delivery</label>
+                                </div>
+                            </div>
+                            <div id="stripe-section" style="display: block; margin-top: 2rem;">
+                                <div id="stripe-card-element" style="background: #fafafa; padding: 1rem; border-radius: 6px; border: 1px solid #e5e5e5;"></div>
+                                <div id="stripe-error" style="color: #e10600; margin-top:0.5rem; font-size:0.95em;"></div>
+                                <!-- Stripe Hint -->
+                                <div style="font-size:0.92em; color:#999; margin-top:0.5em;">Use test card: <b>4242 4242 4242 4242</b>, any future date/3 digits</div>
+                            </div>
+                            <div id="paypal-section" style="display:none; margin-top:2rem;">
+                                <div id="paypal-button-container"></div>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-accent place-order-btn" id="place-order-btn">
+                            Place Order
+                        </button>
+                    </form>
+                </div>
+                
+                <div class="checkout-summary">
+                    <div class="summary-card">
+                        <h3>Order Summary</h3>
+                        <div id="checkout-items">
+                            <!-- Order items will be rendered here -->
+                        </div>
+                        <div class="summary-line">
+                            <span>Subtotal</span>
+                            <span id="checkout-subtotal">$0.00</span>
+                        </div>
+                        <div class="summary-line">
+                            <span>Shipping</span>
+                            <span id="checkout-shipping">Free</span>
+                        </div>
+                        <div class="summary-line">
+                            <span>Tax</span>
+                            <span id="checkout-tax">$0.00</span>
+                        </div>
+                        <div class="summary-line total">
+                            <span>Total</span>
+                            <span id="checkout-total">$0.00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../js/main.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="text/javascript">
+   (function(){
+      // EmailJS no longer used for order submission; backend will send emails
+   })();
+</script>
+    <script>
+        // Mock product data for checkout summary
+        const MOCK_PRODUCTS = [
+            { id: 1, name: "Urban Sneaker Pro", price: 120, currency: "R" },
+            { id: 2, name: "Essential Cotton Tee", price: 29, currency: "R" },
+            { id: 3, name: "Cozy Fleece Hoodie", price: 79, currency: "R" },
+            { id: 4, name: "Active Performance Shorts", price: 39, currency: "R" }
+        ];
+        function getProductById(id) {
+            return MOCK_PRODUCTS.find(p => String(p.id) === String(id));
+        }
+        function renderCheckoutSummary() {
+            const checkoutItems = document.getElementById('checkout-items');
+            const subtotalEl = document.getElementById('checkout-subtotal');
+            const taxEl = document.getElementById('checkout-tax');
+            const totalEl = document.getElementById('checkout-total');
+            
+            if (!checkoutItems) return;
+            
+            let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+            if (cart.length === 0) {
+                checkoutItems.innerHTML = '<p style="padding: 1rem; text-align: center; color: #999;">Your cart is empty.</p>';
+                if (subtotalEl) subtotalEl.textContent = 'R0.00';
+                if (taxEl) taxEl.textContent = 'R0.00';
+                if (totalEl) totalEl.textContent = 'R0.00';
+                return;
+            }
+            
+            let total = 0;
+            checkoutItems.innerHTML = cart.map(item => {
+                const product = getProductById(item.id) || { name: item.name || 'Product', price: 0, currency: 'R' };
+                const itemTotal = product.price * (item.qty || 1);
+                total += itemTotal;
+                return `
+                    <div class="checkout-item" style="display: flex; align-items: center; padding: 0.75rem 0; border-bottom: 1px solid #eee;">
+                        <div style="flex: 1;">
+                            <strong>${product.name}</strong>
+                            ${item.size ? `<br><small>Size: ${item.size}</small>` : ''}
+                            ${item.colour ? `<br><small>Colour: ${item.colour}</small>` : ''}
+                            <br><small>Qty: ${item.qty || 1}</small>
+                        </div>
+                        <div style="font-weight: bold;">${product.currency}${itemTotal.toFixed(2)}</div>
+                    </div>
+                `;
+            }).join('');
+            
+            const tax = total * 0.08;
+            const finalTotal = total + tax;
+            if (subtotalEl) subtotalEl.textContent = `R${total.toFixed(2)}`;
+            if (taxEl) taxEl.textContent = `R${tax.toFixed(2)}`;
+            if (totalEl) totalEl.textContent = `R${finalTotal.toFixed(2)}`;
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+            const name = localStorage.getItem('user_name') || '';
+            const address = localStorage.getItem('user_address') || '';
+            document.getElementById('user-name').value = name;
+            document.getElementById('user-address').value = address;
+            renderCheckoutSummary();
+        });
+        // ========== DYNAMIC PAYMENT UI ==========
+        const paymentRadios = document.querySelectorAll('input[name="payment-method"]');
+        const stripeSection = document.getElementById('stripe-section');
+        const paypalSection = document.getElementById('paypal-section');
+        paymentRadios.forEach(radio => {radio.addEventListener('change', () => {
+            stripeSection.style.display = radio.value === 'card' ? 'block' : 'none';
+            paypalSection.style.display = radio.value === 'paypal' ? 'block' : 'none';
+        });});
+        // ========== STRIPE SETUP ==========
+        let stripe = Stripe('pk_test_51SGm6xEAwicFMaV7A1SbVNhOo3H6Gnc6rywBVZrjFjJ5B9JRxSUn69PNe1u3ex0oGyEobOWhr61r0ygyTIXPNPv1001B9fE1hN');
+        let elements = stripe.elements();
+        let card = elements.create('card', { hidePostalCode: true });
+        card.mount('#stripe-card-element');
+        // Show validation errors from Stripe
+        card.on('change', (e)=>{
+            document.getElementById('stripe-error').textContent = e.error ? e.error.message : '';
+        });
+        // ========== PAYPAL SETUP ==========
+        function renderPaypal() {
+            paypal.Buttons({
+                style: { layout: 'vertical', color: 'blue',  shape: 'rect', label: 'paypal' },
+                createOrder: (data, actions) => {
+                    return actions.order.create({
+                        purchase_units: [{ amount: { value: document.getElementById('checkout-total').textContent.replace(/[^0-9.]/g,'') || '10.00' } }]
+                    });
+                },
+                onApprove: function(data, actions) {
+                    return actions.order.capture().then(function(details) {
+                        document.getElementById('paypal-section').insertAdjacentHTML('beforeend', '<div class="notification notification-success">PayPal Test Payment Success</div>');
+                        setTimeout(()=> handleFinalOrder('paypal'), 900);
+                    });
+                },
+                onError(err) {
+                    document.getElementById('paypal-section').insertAdjacentHTML('beforeend', '<div class="notification notification-error">PayPal Payment Failed</div>');
+                },
+            }).render('#paypal-button-container');
+        }
+        if(window.paypal) renderPaypal(); else window.addEventListener('load', function(){ if(window.paypal) renderPaypal(); });
+        // ========== ORDER SUBMISSION ==========
+        document.getElementById('checkout-form').onsubmit = async function(e){
+            e.preventDefault();
+            // Validate cart is not empty
+            let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+            if (cart.length === 0) {
+                alert('Your cart is empty. Please add items before checkout.');
+                window.location.href = 'shop.html';
+                return;
+            }
+            const payment = document.querySelector('input[name="payment-method"]:checked').value;
+            if(payment == 'paypal'){
+                document.getElementById('paypal-button-container').scrollIntoView({behavior:'smooth'}); return;
+            }
+            if(payment == 'card'){
+                const btn = document.getElementById('place-order-btn'); btn.disabled = true; btn.innerText = 'Processing...';
+                let {token, error} = await stripe.createToken(card);
+                if(error){document.getElementById('stripe-error').textContent = error.message; btn.disabled = false; btn.innerText = 'Place Order'; return;}
+                // continue below to finalize order
+                return handleFinalOrder('card', token);
+            }
+            // for COD just submit direct
+            handleFinalOrder('cod');
+        }
+        // Main order submit logic
+        const API_BASE_URL = 'http://localhost:5000/api';
+        function handleFinalOrder(paymentType, stripeTokenObj){
+            const btn = document.getElementById('place-order-btn');
+            btn.disabled = true; btn.innerText = 'Placing Order...';
+            // Gather order info
+            const name = document.getElementById('user-name').value;
+            const email = document.getElementById('user-email').value;
+            const phone = document.getElementById('user-phone').value;
+            const address = document.getElementById('user-address').value;
+            const city = document.getElementById('user-city').value;
+            const state = document.getElementById('user-state').value;
+            const zip = document.getElementById('user-zip').value;
+            let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+            // Submit to backend to send email with proper details
+            fetch(`${API_BASE_URL}/users/order`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    name,
+                    email,
+                    phone,
+                    address,
+                    city,
+                    state,
+                    zip,
+                    payment: paymentType,
+                    cart
+                })
+            })
+            .then(res => res.ok ? res.json() : Promise.reject(new Error('Failed to send order')))
+            .then(() => {
+                let orders = JSON.parse(localStorage.getItem('orders') || '[]');
+                orders.push({ date: new Date().toISOString(), name, address, email, phone, payment: paymentType, cart });
+                localStorage.setItem('orders', JSON.stringify(orders));
+                window.location.href = 'thank-you.html';
+            })
+            .catch(err => {
+                btn.innerText = 'Place Order'; 
+                btn.disabled = false;
+                let errorMsg = 'Order failed to send. ';
+                if (err.message && err.message.includes('Failed to fetch')) {
+                    errorMsg += 'Please make sure the backend server is running on http://localhost:5000';
+                } else if (err.message && err.message.includes('NetworkError')) {
+                    errorMsg += 'Network error. Please check your connection and try again.';
+                } else {
+                    errorMsg += err.message || 'Please try again.';
+                }
+                alert(errorMsg);
+                console.error('Order submission error:', err);
+            });
+        }
+    </script>
+</body>
+</html> 

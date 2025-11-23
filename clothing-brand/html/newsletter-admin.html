@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Newsletter Subscriptions | 6IX</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .admin-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: var(--secondary-color);
+            min-height: 100vh;
+        }
+        
+        .subscription-item {
+            background: var(--gray-100);
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent-color);
+        }
+        
+        .subscription-email {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .subscription-date {
+            color: var(--gray-600);
+            font-size: 0.9rem;
+        }
+        
+        .subscription-source {
+            color: var(--accent-color);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: var(--primary-color);
+            color: var(--light-text);
+            padding: 1.5rem;
+            text-align: center;
+            border-radius: 8px;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent-color);
+        }
+        
+        .export-btn {
+            background: var(--accent-color);
+            color: var(--light-text);
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-bottom: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <h1>Newsletter Subscriptions</h1>
+        
+        <div class="stats" id="stats">
+            <!-- Stats will be populated by JavaScript -->
+        </div>
+        
+        <button class="export-btn" onclick="exportSubscriptions()">Export to CSV</button>
+        
+        <div id="subscriptions-list">
+            <!-- Subscriptions will be populated by JavaScript -->
+        </div>
+    </div>
+
+    <script>
+        function loadSubscriptions() {
+            const subscriptions = JSON.parse(localStorage.getItem('newsletter_subscriptions') || '[]');
+            
+            // Update stats
+            const statsDiv = document.getElementById('stats');
+            statsDiv.innerHTML = `
+                <div class="stat-card">
+                    <div class="stat-number">${subscriptions.length}</div>
+                    <div>Total Subscriptions</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${new Set(subscriptions.map(s => s.email)).size}</div>
+                    <div>Unique Emails</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${subscriptions.filter(s => new Date(s.date) > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)).length}</div>
+                    <div>This Week</div>
+                </div>
+            `;
+            
+            // Update subscriptions list
+            const listDiv = document.getElementById('subscriptions-list');
+            if (subscriptions.length === 0) {
+                listDiv.innerHTML = '<p>No subscriptions yet.</p>';
+            } else {
+                listDiv.innerHTML = subscriptions
+                    .sort((a, b) => new Date(b.date) - new Date(a.date))
+                    .map(sub => `
+                        <div class="subscription-item">
+                            <div class="subscription-email">${sub.email}</div>
+                            <div class="subscription-date">${new Date(sub.date).toLocaleString()}</div>
+                            <div class="subscription-source">${sub.source}</div>
+                        </div>
+                    `).join('');
+            }
+        }
+        
+        function exportSubscriptions() {
+            const subscriptions = JSON.parse(localStorage.getItem('newsletter_subscriptions') || '[]');
+            
+            if (subscriptions.length === 0) {
+                alert('No subscriptions to export.');
+                return;
+            }
+            
+            const csv = [
+                'Email,Date,Source',
+                ...subscriptions.map(sub => `"${sub.email}","${sub.date}","${sub.source}"`)
+            ].join('\n');
+            
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `newsletter-subscriptions-${new Date().toISOString().split('T')[0]}.csv`;
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }
+        
+        // Load subscriptions on page load
+        document.addEventListener('DOMContentLoaded', loadSubscriptions);
+    </script>
+</body>
+</html>
+

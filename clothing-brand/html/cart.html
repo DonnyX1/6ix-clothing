@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart | 6IX</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/animations.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-left">
+                <div class="logo">6IX</div>
+            </div>
+            <div class="header-center">
+                <nav>
+                    <ul class="nav-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li class="has-mega">
+                            <a href="shop.html" class="mega-toggle" aria-expanded="false">Shop</a>
+                            <div class="mega-menu">
+                                <div class="mega-column">
+                                    <h4>Featured</h4>
+                                    <a href="shop.html">All Products</a>
+                                    <a href="shop.html?category=new">New Arrivals</a>
+                                    <a href="shop.html?category=best">Best Sellers</a>
+                                    <a href="shop.html?category=sale">Sale</a>
+                                </div>
+                                <div class="mega-column">
+                                    <h4>Men</h4>
+                                    <a href="shop.html?category=sneakers">Sneakers</a>
+                                    <a href="shop.html?category=tops">Tops & T-Shirts</a>
+                                    <a href="shop.html?category=hoodies">Hoodies</a>
+                                    <a href="shop.html?category=shorts">Shorts</a>
+                                    <a href="shop.html?category=outerwear">Outerwear</a>
+                                </div>
+                                <div class="mega-column">
+                                    <h4>Women</h4>
+                                    <a href="shop.html?category=sneakers">Sneakers</a>
+                                    <a href="shop.html?category=tops">Tops</a>
+                                    <a href="shop.html?category=hoodies">Hoodies</a>
+                                    <a href="shop.html?category=outerwear">Outerwear</a>
+                                    <a href="shop.html?category=accessories">Accessories</a>
+                                </div>
+                                <div class="mega-column">
+                                    <h4>Collections</h4>
+                                    <a href="shop.html?category=running">Running</a>
+                                    <a href="shop.html?category=training">Training</a>
+                                    <a href="shop.html?category=lifestyle">Lifestyle</a>
+                                    <a href="shop.html?category=essentials">Essentials</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="header-right">
+                <div class="header-actions">
+                    <div class="cart-icon">
+                        <a href="cart.html">🛒</a>
+                    </div>
+                </div>
+                <div class="mobile-menu-btn">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="cart-page">
+        <div class="container">
+            <div class="cart-header">
+                <h1>Your Bag</h1>
+                <div class="cart-count" id="cart-count">0 items</div>
+            </div>
+            
+            <div class="cart-content">
+                <div class="cart-items-section">
+                    <div id="cart-items" class="cart-items-list">
+                        <!-- Cart items will be rendered here -->
+                    </div>
+                    
+                    <div class="cart-empty" id="cart-empty" style="display: none;">
+                        <div class="empty-cart-icon">🛍️</div>
+                        <h2>Your bag is empty</h2>
+                        <p>Looks like you haven't added anything to your bag yet.</p>
+                        <a href="shop.html" class="btn btn-accent">Start Shopping</a>
+                    </div>
+                </div>
+                
+                <div class="cart-summary">
+                    <div class="summary-card">
+                        <h3>Order Summary</h3>
+                        <div class="summary-line">
+                            <span>Subtotal</span>
+                            <span id="subtotal">$0.00</span>
+                        </div>
+                        <div class="summary-line">
+                            <span>Shipping</span>
+                            <span id="shipping">Free</span>
+                        </div>
+                        <div class="summary-line">
+                            <span>Tax</span>
+                            <span id="tax">$0.00</span>
+                        </div>
+                        <div class="summary-line total">
+                            <span>Total</span>
+                            <span id="total">$0.00</span>
+                        </div>
+                        
+                        <a href="checkout.html" class="btn btn-accent checkout-btn" id="checkout-btn" style="display: none;">
+                            Checkout
+                        </a>
+                        
+                        <div class="shipping-info">
+                            <p>Free shipping on orders over $75</p>
+                            <p>Estimated delivery: 2-3 business days</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+    // Local product data (mirror shop/index)
+    const products = [
+      { id: 1, name: "Urban Sneaker Pro", price: 120, currency: "R", category: "sneakers", image: "../images/placeholder.svg", description: "The Urban Sneaker Pro delivers ultimate comfort and style for the modern lifestyle. Featuring premium materials and innovative cushioning technology for all-day wear.", sizes: ["7","7.5","8","8.5","9","9.5","10","10.5","11","11.5","12"], availableSizes: ["8","8.5","9","9.5","10","10.5","11"] },
+      { id: 2, name: "Essential Cotton Tee", price: 29, currency: "R", category: "tops", image: "../images/placeholder.svg", description: "Our Essential Cotton Tee is crafted from premium organic cotton for unmatched comfort. Perfect for layering or wearing solo, this versatile piece is a wardrobe staple.", sizes: ["XS","S","M","L","XL","XXL"], availableSizes: ["S","M","L","XL"] },
+      { id: 3, name: "Cozy Fleece Hoodie", price: 79, currency: "R", category: "hoodies", image: "../images/placeholder.svg", description: "The Cozy Fleece Hoodie combines comfort with contemporary style. Made with soft, premium fleece material that provides warmth and a relaxed fit for everyday wear.", sizes: ["XS","S","M","L","XL","XXL"], availableSizes: ["S","M","L","XL","XXL"] },
+      { id: 4, name: "Active Performance Shorts", price: 39, currency: "R", category: "shorts", image: "../images/placeholder.svg", description: "Designed for both performance and comfort, these Active Performance Shorts feature moisture-wicking fabric and a flexible design that moves with you during any activity.", sizes: ["XS","S","M","L","XL","XXL"], availableSizes: ["S","M","L","XL"] }
+    ];
+    function getProductById(id) {
+      return products.find(p => p.id == id);
+    }
+    function removeFromCart(id, size = '', colour = '') {
+      let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+      cart = cart.filter(item => !(item.id == id && (item.size || '') == (size || '') && (item.colour || '') == (colour || '')));
+      localStorage.setItem('cart', JSON.stringify(cart));
+      renderCart();
+    }
+    // Patch renderCart for id+size+qty
+    function renderCart() {
+      const cartDiv = document.getElementById('cart-items');
+      const cartEmpty = document.getElementById('cart-empty');
+      const cartCount = document.getElementById('cart-count');
+      const checkoutBtn = document.getElementById('checkout-btn');
+      const subtotalEl = document.getElementById('subtotal');
+      const totalEl = document.getElementById('total');
+      if (!cartDiv) return;
+      let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+      if (cart.length === 0) {
+        cartDiv.style.display = 'none';
+        if (cartEmpty) cartEmpty.style.display = 'block';
+        if (checkoutBtn) checkoutBtn.style.display = 'none';
+        if (cartCount) cartCount.textContent = '0 items';
+        if (subtotalEl) subtotalEl.textContent = 'R0.00';
+        if (totalEl) totalEl.textContent = 'R0.00';
+        return;
+      }
+      cartDiv.style.display = 'block';
+      if (cartEmpty) cartEmpty.style.display = 'none';
+      if (checkoutBtn) checkoutBtn.style.display = 'block';
+      if (cartCount) cartCount.textContent = `${cart.length} item${cart.length > 1 ? 's' : ''}`;
+      let total = 0;
+      cartDiv.innerHTML = cart.map(item => {
+        const product = getProductById(item.id);
+        if (!product) return '';
+        const itemTotal = product.price * (item.qty||1);
+        total += itemTotal;
+        return `
+        <div class="cart-item">
+            <div class="cart-item-image"><img src="${product.image}" alt="${product.name}"></div>
+            <div class="cart-item-details">
+                <h3>${product.name}</h3>
+                <p>${product.currency || 'R'}${product.price.toFixed(2)}${item.size ? '<br><small>Size: ' + item.size + '</small>' : ''}${item.colour ? '<br><small>Colour: ' + item.colour + '</small>' : ''}</p>
+            </div>
+            <div class="cart-item-controls">
+                <span>Qty: ${item.qty||1}</span>
+                <button onclick="removeFromCart(${item.id}, '${item.size||''}', '${item.colour||''}')">Remove</button>
+            </div>
+        </div>
+        `;
+      }).join('');
+      if (subtotalEl) subtotalEl.textContent = 'R'+total.toFixed(2);
+      if (totalEl) totalEl.textContent = 'R'+total.toFixed(2);
+    }
+    document.addEventListener('DOMContentLoaded', renderCart);
+    </script>
+    <script src="../js/main.js"></script>
+</body>
+</html> 

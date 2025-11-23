@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login / Register | 6IX</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    <style>
+        .auth-page {
+            min-height: 100vh;
+            background-color: var(--secondary-color);
+            padding-top: 100px;
+        }
+        .auth-container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+        .auth-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .auth-header h1 {
+            font-size: 2.5rem;
+            font-weight: 300;
+            letter-spacing: -0.02em;
+            text-transform: uppercase;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        .auth-header p {
+            color: var(--gray-600);
+            font-size: 0.95rem;
+        }
+        .auth-form {
+            background: var(--secondary-color);
+            border: 1px solid var(--border-color);
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+        }
+        .auth-form h2 {
+            font-size: 1.5rem;
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid var(--border-color);
+            background: var(--secondary-color);
+            color: var(--text-color);
+            font-size: 1rem;
+            transition: var(--transition);
+            font-family: inherit;
+        }
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(225, 6, 0, 0.1);
+        }
+        .form-group input::placeholder {
+            color: var(--gray-400);
+        }
+        .auth-form button {
+            width: 100%;
+            margin-top: 1rem;
+        }
+        .auth-error {
+            color: var(--accent-color);
+            font-size: 0.85rem;
+            margin-top: 0.75rem;
+            padding: 0.75rem;
+            background: rgba(225, 6, 0, 0.05);
+            border-left: 3px solid var(--accent-color);
+        }
+        .auth-success {
+            color: #28a745;
+            font-size: 0.85rem;
+            margin-top: 0.75rem;
+            padding: 0.75rem;
+            background: rgba(40, 167, 69, 0.05);
+            border-left: 3px solid #28a745;
+        }
+        .auth-switch {
+            text-align: center;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+        }
+        .auth-switch a {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        .auth-switch a:hover {
+            color: var(--primary-color);
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 2rem;
+            color: var(--gray-600);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+        .back-link:hover {
+            color: var(--accent-color);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-left">
+                <div class="logo">6IX</div>
+            </div>
+            <div class="header-center">
+                <nav>
+                    <ul class="nav-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="shop.html">Shop</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="header-right">
+                <div class="header-actions">
+                    <div class="cart-icon">
+                        <a href="cart.html">🛒</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="auth-page">
+        <div class="container">
+            <div class="auth-container">
+                <div class="auth-header fade-in">
+                    <h1>Welcome Back</h1>
+                    <p>Sign in to your account or create a new one</p>
+                </div>
+
+                <div id="login-form" class="auth-form fade-up">
+                    <h2>Login</h2>
+                    <div class="form-group">
+                        <label for="login-identifier">Email or Phone</label>
+                        <input type="text" id="login-identifier" placeholder="Enter your email or phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" placeholder="Enter your password" required>
+                    </div>
+                    <button type="submit" class="btn btn-accent">Login</button>
+                    <div id="login-error" class="auth-error" style="display: none;"></div>
+                    <div class="auth-switch">
+                        <p>Don't have an account? <a href="#" id="show-register">Register</a></p>
+                    </div>
+                </div>
+
+                <div id="register-form" class="auth-form fade-up" style="display: none;">
+                    <h2>Register</h2>
+                    <div class="form-group">
+                        <label for="register-name">Name</label>
+                        <input type="text" id="register-name" placeholder="Enter your full name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-email">Email</label>
+                        <input type="email" id="register-email" placeholder="Enter your email">
+                    </div>
+                    <div class="form-group">
+                        <label for="register-phone">Phone</label>
+                        <input type="tel" id="register-phone" placeholder="Enter your phone number">
+                    </div>
+                    <div class="form-group">
+                        <label for="register-password">Password</label>
+                        <input type="password" id="register-password" placeholder="Create a password" required>
+                    </div>
+                    <button type="submit" class="btn btn-accent">Register</button>
+                    <div id="register-error" class="auth-error" style="display: none;"></div>
+                    <div class="auth-switch">
+                        <p>Already have an account? <a href="#" id="show-login">Login</a></p>
+                    </div>
+                </div>
+
+                <div id="profile-form" class="auth-form fade-up" style="display: none;">
+                    <h2>Edit Profile</h2>
+                    <div class="form-group">
+                        <label for="profile-name">Name</label>
+                        <input type="text" id="profile-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="profile-email">Email</label>
+                        <input type="email" id="profile-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="profile-phone">Phone</label>
+                        <input type="tel" id="profile-phone">
+                    </div>
+                    <div class="form-group">
+                        <label for="profile-password">New Password (leave blank to keep current)</label>
+                        <input type="password" id="profile-password" placeholder="Enter new password">
+                    </div>
+                    <button type="submit" class="btn btn-accent">Update Profile</button>
+                    <div id="profile-error" class="auth-error" style="display: none;"></div>
+                    <div id="profile-success" class="auth-success" style="display: none;"></div>
+                </div>
+
+                <a href="shop.html" class="back-link">← Back to Shop</a>
+            </div>
+        </div>
+    </main>
+    <script src="../js/main.js"></script>
+    <script src="../js/auth.js"></script>
+    <script>
+        // Check if user is already logged in
+        if (authService.isAuthenticated()) {
+            window.location.href = 'shop.html';
+        }
+        
+        // Form switching
+        document.getElementById('show-register').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('login-form').style.display = 'none';
+            document.getElementById('register-form').style.display = 'block';
+        });
+        
+        document.getElementById('show-login').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('register-form').style.display = 'none';
+            document.getElementById('login-form').style.display = 'block';
+        });
+        
+        // Login
+        document.getElementById('login-form').onsubmit = async function(e) {
+            e.preventDefault();
+            const errorDiv = document.getElementById('login-error');
+            errorDiv.style.display = 'none';
+            errorDiv.textContent = '';
+            
+            const identifier = document.getElementById('login-identifier').value.trim();
+            const password = document.getElementById('login-password').value;
+            const result = await authService.login(identifier, password);
+            if (result.success) {
+                window.location.href = 'shop.html';
+            } else {
+                errorDiv.textContent = result.message;
+                errorDiv.style.display = 'block';
+            }
+        };
+        
+        // Register
+        document.getElementById('register-form').onsubmit = async function(e) {
+            e.preventDefault();
+            const errorDiv = document.getElementById('register-error');
+            errorDiv.style.display = 'none';
+            errorDiv.textContent = '';
+            
+            const name = document.getElementById('register-name').value.trim();
+            const email = document.getElementById('register-email').value.trim();
+            const phone = document.getElementById('register-phone').value.trim();
+            const password = document.getElementById('register-password').value;
+            if (!email && !phone) {
+                errorDiv.textContent = 'Please provide an email or phone number.';
+                errorDiv.style.display = 'block';
+                return;
+            }
+            const result = await authService.register(name, email, password, phone);
+            if (result.success && result.verificationRequired) {
+                alert('Verification required. Please check your email for a verification link.');
+            } else if (result.success) {
+                window.location.href = 'shop.html';
+            } else {
+                errorDiv.textContent = result.message;
+                errorDiv.style.display = 'block';
+            }
+        };
+        
+        // Profile editing
+        document.getElementById('profile-form').onsubmit = async function(e) {
+            e.preventDefault();
+            const errorDiv = document.getElementById('profile-error');
+            const successDiv = document.getElementById('profile-success');
+            errorDiv.style.display = 'none';
+            successDiv.style.display = 'none';
+            errorDiv.textContent = '';
+            successDiv.textContent = '';
+            
+            const name = document.getElementById('profile-name').value.trim();
+            const email = document.getElementById('profile-email').value.trim();
+            const phone = document.getElementById('profile-phone') ? document.getElementById('profile-phone').value.trim() : '';
+            const password = document.getElementById('profile-password').value;
+            const result = await authService.updateProfile({ name, email, phone, password });
+            if (result.success) {
+                successDiv.textContent = 'Profile updated successfully!';
+                successDiv.style.display = 'block';
+            } else {
+                errorDiv.textContent = result.message;
+                errorDiv.style.display = 'block';
+            }
+        };
+    </script>
+</body>
+</html> 

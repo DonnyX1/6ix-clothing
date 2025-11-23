@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>6IX | Modern Clothing</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/animations.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-left">
+                <div class="logo">6IX</div>
+            </div>
+            <div class="header-center">
+                <nav>
+                    <ul class="nav-links">
+                        <li><a href="index.html" class="active">Home</a></li>
+                        <li class="has-mega">
+                            <a href="shop.html" class="mega-toggle" aria-expanded="false">Shop</a>
+                            <div class="mega-menu">
+                                <div class="mega-column">
+                                    <h4>Featured</h4>
+                                    <a href="shop.html">All Products</a>
+                                    <a href="shop.html?category=new">New Arrivals</a>
+                                    <a href="shop.html?category=best">Best Sellers</a>
+                                    <a href="shop.html?category=sale">Sale</a>
+                                </div>
+                                <div class="mega-column">
+                                    <h4>Men</h4>
+                                    <a href="shop.html?category=sneakers">Sneakers</a>
+                                    <a href="shop.html?category=tops">Tops & T-Shirts</a>
+                                    <a href="shop.html?category=hoodies">Hoodies</a>
+                                    <a href="shop.html?category=shorts">Shorts</a>
+                                    <a href="shop.html?category=outerwear">Outerwear</a>
+                                </div>
+                                <div class="mega-column">
+                                    <h4>Women</h4>
+                                    <a href="shop.html?category=sneakers">Sneakers</a>
+                                    <a href="shop.html?category=tops">Tops</a>
+                                    <a href="shop.html?category=hoodies">Hoodies</a>
+                                    <a href="shop.html?category=outerwear">Outerwear</a>
+                                    <a href="shop.html?category=accessories">Accessories</a>
+                                </div>
+                                <div class="mega-column">
+                                    <h4>Collections</h4>
+                                    <a href="shop.html?category=running">Running</a>
+                                    <a href="shop.html?category=training">Training</a>
+                                    <a href="shop.html?category=lifestyle">Lifestyle</a>
+                                    <a href="shop.html?category=essentials">Essentials</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="header-right">
+                <div class="header-actions">
+                    <div class="cart-icon">
+                        <a href="cart.html">🛒</a>
+                    </div>
+                </div>
+                <div class="mobile-menu-btn">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content fade-in">
+                <h1>Move Different.</h1>
+                <p>Discover the latest collection of premium athletic wear designed for performance and style. Push your limits with gear that moves with you.</p>
+                <a href="shop.html" class="btn btn-accent">Shop Now</a>
+            </div>
+            <div class="hero-image">
+                <img src="../images/sets.webp" alt="Featured Product" />
+            </div>
+        </div>
+    </section>
+
+    <section class="featured-products">
+        <div class="container">
+            <h2 class="section-title fade-up">Featured Collection</h2>
+            <div class="products-grid">
+                <div class="product-card fade-up">
+                    <div class="product-image">
+                        <img src="../images/placeholder.svg" alt="Urban Sneaker Pro">
+                    </div>
+                    <div class="product-info">
+                        <div class="category">Sneakers</div>
+                        <h3>Urban Sneaker Pro</h3>
+                        <p class="price">R120.00</p>
+                        <button class="btn-small view-details-btn" data-product-id="1">View Details</button>
+                    </div>
+                </div>
+                <div class="product-card fade-up">
+                    <div class="product-image">
+                        <img src="../images/placeholder.svg" alt="Cozy Fleece Hoodie">
+                    </div>
+                    <div class="product-info">
+                        <div class="category">Hoodies</div>
+                        <h3>Cozy Fleece Hoodie</h3>
+                        <p class="price">R79.00</p>
+                        <button class="btn-small view-details-btn" data-product-id="3">View Details</button>
+                    </div>
+                </div>
+            </div>
+            <div class="center-btn">
+                <a href="shop.html" class="btn btn-outline">View All Products</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="newsletter">
+        <div class="container">
+            <div class="newsletter-content fade-up">
+                <h2>Stay Connected</h2>
+                <p>Get the latest updates on new releases, exclusive drops, and member-only offers. Be the first to know.</p>
+                <form class="newsletter-form" id="newsletter-form">
+                    <div class="form-group">
+                        <input type="email" id="newsletter-email" placeholder="Enter your email" required>
+                        <div class="error-message" id="newsletter-error"></div>
+                    </div>
+                    <button type="submit" class="btn btn-accent" id="newsletter-submit">
+                        <span class="btn-text">Sign Up</span>
+                        <span class="btn-loading" style="display: none;">Subscribing...</span>
+                    </button>
+                </form>
+                <div class="newsletter-success" id="newsletter-success" style="display: none;">
+                    <div class="success-icon">✓</div>
+                    <h3>Welcome to the family!</h3>
+                    <p>You've successfully subscribed to our newsletter. Check your email for confirmation.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Details Popup Modal -->
+    <div id="product-details-modal" class="product-details-modal">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content">
+            <button class="modal-close">&times;</button>
+            <div class="modal-body">
+                <div class="modal-image">
+                    <img id="modal-product-image" src="" alt="">
+                </div>
+                <div class="modal-info">
+                    <div id="modal-product-category" class="modal-category"></div>
+                    <h2 id="modal-product-name"></h2>
+                    <div id="modal-product-price" class="modal-price"></div>
+                    <div id="modal-product-description" class="modal-description"></div>
+                    
+                    <div class="modal-details">
+                        <div class="detail-section">
+                            <h3>Sizes Available:</h3>
+                            <div id="modal-sizes" class="size-options">
+                                <button class="size-option">8</button>
+                                <button class="size-option">8.5</button>
+                                <button class="size-option">9</button>
+                                <button class="size-option">9.5</button>
+                                <button class="size-option">10</button>
+                                <button class="size-option">10.5</button>
+                                <button class="size-option">11</button>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-section">
+                            <h3>Colors:</h3>
+                            <div id="modal-colors" class="color-options"></div>
+                        </div>
+                        
+                        <div class="detail-section">
+                            <h3>Features:</h3>
+                            <ul id="modal-features" class="feature-list"></ul>
+                        </div>
+                    </div>
+                    
+                    <div class="modal-actions">
+                        <button id="modal-add-to-cart" class="btn btn-primary">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <div class="logo">6IX</div>
+                    <p>Modern clothing for the contemporary lifestyle.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="shop.html">Shop</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Connect</h3>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon">FB</a>
+                        <a href="#" class="social-icon">IG</a>
+                        <a href="#" class="social-icon">TW</a>
+                        <a href="#" class="social-icon">PT</a>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 6IX Clothing. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/auth.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/animations.js"></script>
+    <script>
+        // Product data for featured products modal
+        const products = [
+            { 
+                id: 1, 
+                name: "Urban Sneaker Pro", 
+                price: 120, 
+                currency: "R",
+                category: "sneakers", 
+                image: "../images/placeholder.svg",
+                description: "The Urban Sneaker Pro delivers ultimate comfort and style for the modern lifestyle. Featuring premium materials and innovative cushioning technology for all-day wear.",
+                availableSizes: ["8", "8.5", "9", "9.5", "10", "10.5", "11"],
+                colors: ["Black", "White", "Navy", "Grey"],
+                features: ["Premium leather upper", "Air-cushioned sole", "Breathable mesh lining", "Non-slip rubber outsole"]
+            },
+            { 
+                id: 3, 
+                name: "Cozy Fleece Hoodie", 
+                price: 79, 
+                currency: "R",
+                category: "hoodies", 
+                image: "../images/placeholder.svg",
+                description: "The Cozy Fleece Hoodie combines comfort with contemporary style. Made with soft, premium fleece material that provides warmth and a relaxed fit for everyday wear.",
+                availableSizes: ["S", "M", "L", "XL", "XXL"],
+                colors: ["Black", "Charcoal", "Navy", "Burgundy"],
+                features: ["Premium fleece material", "Kangaroo pocket", "Adjustable drawstring hood", "Ribbed cuffs and hem"]
+            }
+        ];
+
+        // Modal functionality
+        function showProductDetailsModal(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+
+            // Populate modal content
+            document.getElementById('modal-product-image').src = product.image;
+            document.getElementById('modal-product-image').alt = product.name;
+            document.getElementById('modal-product-category').textContent = product.category.charAt(0).toUpperCase() + product.category.slice(1);
+            document.getElementById('modal-product-name').textContent = product.name;
+            document.getElementById('modal-product-price').textContent = `${product.currency || 'R'}${product.price.toFixed(2)}`;
+            document.getElementById('modal-product-description').textContent = product.description;
+
+            // Populate sizes
+            const sizesContainer = document.getElementById('modal-sizes');
+            sizesContainer.innerHTML = product.availableSizes.map(size => 
+                `<button class="size-option">${size}</button>`
+            ).join('');
+
+            // Populate colors
+            const colorsContainer = document.getElementById('modal-colors');
+            colorsContainer.innerHTML = product.colors.map(color => 
+                `<span class="color-option" style="background-color: ${getColorValue(color)}"></span>`
+            ).join('');
+
+            // Populate features
+            const featuresContainer = document.getElementById('modal-features');
+            featuresContainer.innerHTML = product.features.map(feature => 
+                `<li>${feature}</li>`
+            ).join('');
+
+            // Set up action buttons
+            document.getElementById('modal-add-to-cart').onclick = () => addToCartFromModal(product);
+            // document.getElementById('modal-full-details').href = `product.html?id=${product.id}`; // Removed as per edit hint
+
+            // Show modal
+            document.getElementById('product-details-modal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function showModalNotification(msg, type = 'success') {
+            let n = document.getElementById('modal-toast');
+            if (!n) {
+                n = document.createElement('div');
+                n.id = 'modal-toast';
+                n.style.position = 'absolute';
+                n.style.top = '15px';
+                n.style.left = '50%';
+                n.style.transform = 'translateX(-50%)';
+                n.style.background = type === 'success' ? '#28a745' : '#e10600';
+                n.style.color = '#fff';
+                n.style.padding = '0.75em 1.75em';
+                n.style.borderRadius = '2em';
+                n.style.boxShadow = '0 2px 18px rgba(0,0,0,0.08)';
+                n.style.fontWeight = 'bold';
+                n.style.zIndex = '9999';
+                document.querySelector('.modal-content').appendChild(n);
+            }
+            n.textContent = msg;
+            n.style.display = 'block';
+            setTimeout(()=>{ if(n) n.style.display='none'; },2000);
+        }
+        function addToCartFromModal(product) {
+            const selectedSizeBtn = document.querySelector('#modal-sizes .size-option.selected') ||
+                                    document.querySelector('#modal-sizes .size-btn.active');
+            const size = selectedSizeBtn ? selectedSizeBtn.textContent : '';
+            if (!size) {
+                showModalNotification('Please select a size before adding to cart.', 'error');
+                return;
+            }
+            let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+            const existingIndex = cart.findIndex(i => i.id === product.id && i.size === size);
+            if (existingIndex >= 0) {
+                cart[existingIndex].qty += 1;
+            } else {
+                cart.push({ id: product.id, size, qty: 1 });
+            }
+            localStorage.setItem('cart', JSON.stringify(cart));
+            showModalNotification(`${product.name} (${size}) added to cart!`, 'success');
+            setTimeout(closeProductDetailsModal, 1000);
+        }
+        document.addEventListener('click', function(e) {
+            if (e.target.closest('.size-option')) {
+                document.querySelectorAll('.size-option').forEach(btn => btn.classList.remove('selected'));
+                e.target.classList.add('selected');
+            }
+        });
+        function closeProductDetailsModal() {
+            document.getElementById('product-details-modal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+            let n = document.getElementById('modal-toast');
+            if (n) n.style.display = 'none';
+        }
+
+        function getColorValue(colorName) {
+            const colorMap = {
+                'Black': '#000000',
+                'White': '#FFFFFF',
+                'Navy': '#1e3a8a',
+                'Grey': '#6b7280',
+                'Charcoal': '#374151',
+                'Burgundy': '#7c2d12',
+                'Forest Green': '#166534',
+                'Royal Blue': '#1d4ed8'
+            };
+            return colorMap[colorName] || '#cccccc';
+        }
+
+        // Initialize modal functionality when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add event listeners for view details buttons
+            document.querySelectorAll('.view-details-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const productId = parseInt(e.target.getAttribute('data-product-id'));
+                    showProductDetailsModal(productId);
+                });
+            });
+
+            // Modal event listeners
+            document.querySelector('.modal-close').addEventListener('click', closeProductDetailsModal);
+            document.querySelector('.modal-backdrop').addEventListener('click', closeProductDetailsModal);
+            
+            // Close modal on escape key
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    closeProductDetailsModal();
+                }
+            });
+        });
+    </script>
+</body>
+</html> 
